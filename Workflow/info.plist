@@ -735,6 +735,11 @@ fi</string>
 				<key>withspace</key>
 				<true/>
 			</dict>
+			<key>inboundconfig</key>
+			<dict>
+				<key>inputmode</key>
+				<integer>1</integer>
+			</dict>
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
@@ -1768,6 +1773,8 @@ Use the [Universal Action](https://www.alfredapp.com/help/features/universal-act
 			<string>token</string>
 		</dict>
 	</array>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
 	<string>2025.9</string>
 	<key>webaddress</key>
