@@ -1,8 +1,7 @@
 #!/bin/zsh --no-rcs
 
 # Get lastest cache timestamp
-readonly documents_file="${alfred_workflow_data}/documents.json"
-readonly lastUpdated=$(date -r "${documents_file}" +"%A, %B %d %Y at %I:%M%p" || printf "Never")
+readonly lastUpdated=$(date -r "${alfred_workflow_data}/documents.json" +"%A, %B %d %Y at %I:%M%p" || printf "Never")
 
 cat << EOB
 {"items": [
@@ -16,9 +15,9 @@ cat << EOB
 		"variables": { "pref_id": "open" }
 	},
 	{
-		"title": "Browser Settings",
-		"subtitle": "Select the default browser for ${alfred_workflow_name}",
-		"variables": { "pref_id": "browser" }
-	}
+		"title": "Configure Workflow...",
+		"subtitle": "Open the configuration window for ${alfred_workflow_name}",
+		"variables": { "pref_id": "configure" }
+	},
 ]}
 EOB
