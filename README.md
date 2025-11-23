@@ -2,6 +2,8 @@
 
 Search & view Paperless-ngx documents in Alfred
 
+[⤓ Install from the Alfred Gallery](https://alfred.app/workflows/firefingers21/paperless-search/)
+
 ## Setup
 
 Set the Base URL and API Token of your [Paperless-ngx](https://docs.paperless-ngx.com/) installation in the [Workflow’s Configuration](https://www.alfredapp.com/help/workflows/user-configuration/). You can find the API Token from the "My Profile" link in the user dropdown found in the web UI.
