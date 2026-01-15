@@ -49,7 +49,7 @@ jq -cs \
                 "path": "\($thumbnail_folder)/\(.id).webp"
             } else {
                 "type": "fileicon",
-                "path": "filetypes/file.\(.archived_file_name | split(".") | last)"
+                "path": "filetypes/file.\((.archived_file_name // .original_file_name // "file.txt") | split(".") | last)"
             } end),
             "mods": {
                 "cmd": (if (.mime_type == "application/pdf") then {
