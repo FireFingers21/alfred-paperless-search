@@ -513,7 +513,7 @@
 				<key>script</key>
 				<string>exit_code=()
 for file in "${@}"; do
-	curl -sf -w "%{http_code} " -H "Authorization: Token ${token}" -F document=@"${file}" -L "${baseUrl}/api/documents/post_document/" &gt; /dev/null
+	curl -sf -w "%{http_code} " -H "Authorization: Token ${token}" -F document=@"${file}" -L "${baseUrl%%/}/api/documents/post_document/" &gt; /dev/null
 	exit_code+=($?)
 done
 
@@ -1534,7 +1534,7 @@ Use the [Universal Action](https://www.alfredapp.com/help/features/universal-act
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>The base URL of your Paperless-ngx installation, without a trailing slash</string>
+			<string>The base URL of your Paperless-ngx installation.</string>
 			<key>label</key>
 			<string>Base URL</string>
 			<key>type</key>

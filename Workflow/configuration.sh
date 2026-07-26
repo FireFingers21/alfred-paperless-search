@@ -12,6 +12,7 @@ cat << EOB
 	},
 	{
 		"title": "Open Paperless-ngx",
+		"arg": "${baseUrl%%/}",
 		"variables": { "pref_id": "open" }
 	},
 	{

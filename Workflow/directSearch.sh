@@ -15,7 +15,7 @@ readonly thumbnail_folder="${alfred_workflow_data}/thumbnails"
 # Query Paperless-ngx API
 autocomplete_query="${1//*(:| |\*|\(|\[|\")/}"
 if [[ -n "${1}" ]]; then
-    readonly search_result=$(curl -sf --connect-timeout 5 --compressed --parallel -H "Authorization: Token ${token}" -L "${baseUrl}/api/documents/?page=1&page_size=27&truncate_content=true" --url-query "query=${1}" -L "${baseUrl}/api/search/autocomplete/?limit=9" --url-query "term=${autocomplete_query}")
+    readonly search_result=$(curl -sf --connect-timeout 5 --compressed --parallel -H "Authorization: Token ${token}" -L "${baseUrl%%/}/api/documents/?page=1&page_size=27&truncate_content=true" --url-query "query=${1}" -L "${baseUrl%%/}/api/search/autocomplete/?limit=9" --url-query "term=${autocomplete_query}")
     [[ -z "${search_result}" ]] && echo '{"items":[{ "title":"Paperless Direct Search", "subtitle":"Unable to connect to Paperless-ngx", "valid":false }]}' && exit
 fi
 
@@ -30,7 +30,7 @@ jq -cs \
    --arg alfred_workflow_keyword "${alfred_workflow_keyword}" \
    --arg query "${1%%${autocomplete_query}}" \
    --arg fullQuery "${1}" \
-   --arg baseUrl "${baseUrl}" \
+   --arg baseUrl "${baseUrl%%/}" \
    --arg useQL "${useQL}" \
    --arg useThumbnails "${useThumbnails}" \
    --arg thumbnail_folder "${thumbnail_folder}" \

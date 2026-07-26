@@ -21,7 +21,7 @@ readonly tags_file="${alfred_workflow_data}/tags.json"
 # Load Documents
 jq -cs \
    --arg alfred_workflow_keyword "${alfred_workflow_keyword}" \
-   --arg baseUrl "${baseUrl}" \
+   --arg baseUrl "${baseUrl%%/}" \
    --arg useCorrespondent "${useCorrespondent}" \
    --arg useTag "${useTag}" \
    --arg useDocumentType "${useDocumentType}" \
