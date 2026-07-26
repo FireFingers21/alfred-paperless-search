@@ -9,21 +9,19 @@ readonly thumbnail_folder="${alfred_workflow_data}/thumbnails"
 # Favicon Check
 [[ "${useThumbnails}" -eq 1 ]] && [[ -f "${documents_file}" && ! -d "${thumbnail_folder}" ]] && reload=$(./reload.sh)
 
+# Prompt if cache files don't exist
+files=(${alfred_workflow_data}/{correspondents,document_types,tags}.json(N))
+(( ${#files} != 3 )) && jq -cn --arg alfred_workflow_keyword "${alfred_workflow_keyword}" '{"variables":{"keyword":$alfred_workflow_keyword}, "items":[{ "title":"No Documents Found", "subtitle":"Press ↩ to load documents", "arg":"reload" }]}' && exit
+
 # Placeholder for Empty Search Query
 [[ -z "${1}" && -f "${documents_file}" ]] && echo '{"items":[{ "title":"Paperless Direct Search", "subtitle":"Search against the Paperless-ngx API directly", "valid":false }]}' && exit
 
 # Query Paperless-ngx API
 autocomplete_query="${1//*(:| |\*|\(|\[|\")/}"
 if [[ -n "${1}" ]]; then
-    readonly search_result=$(curl -sf --connect-timeout 5 --compressed --parallel -H "Authorization: Token ${token}" -L "${baseUrl%%/}/api/documents/?page=1&page_size=27&truncate_content=true" --url-query "query=${1}" -L "${baseUrl%%/}/api/search/autocomplete/?limit=9" --url-query "term=${autocomplete_query}")
+    readonly search_result=$(curl -sf --connect-timeout 2.5 --compressed --parallel -H "Authorization: Token ${token}" -L "${baseUrl%%/}/api/documents/?page=1&page_size=27&truncate_content=true" --url-query "query=${1}" -L "${baseUrl%%/}/api/search/autocomplete/?limit=9" --url-query "term=${autocomplete_query}")
     [[ -z "${search_result}" ]] && echo '{"items":[{ "title":"Paperless Direct Search", "subtitle":"Unable to connect to Paperless-ngx", "valid":false }]}' && exit
 fi
-
-# Assemble JSON Objects
-readonly paperless_json=(
-    "$(jq -cs '(.[] | select(type == "object")), (.[] | select(type == "array"))' <<< ${search_result})"
-    "$(cat ${alfred_workflow_data}/correspondents.json ${alfred_workflow_data}/document_types.json ${alfred_workflow_data}/tags.json)"
-)
 
 # Load Documents
 jq -cs \
@@ -34,18 +32,19 @@ jq -cs \
    --arg useQL "${useQL}" \
    --arg useThumbnails "${useThumbnails}" \
    --arg thumbnail_folder "${thumbnail_folder}" \
-'{
+   --slurpfile correspondents "${alfred_workflow_data}/correspondents.json" \
+   --slurpfile document_types "${alfred_workflow_data}/document_types.json" \
+   --slurpfile tags "${alfred_workflow_data}/tags.json" \
+'(.[] | select(type == "object")) as $response | (.[] | select(type == "array")) as $autocomplete |
+{
     "variables": {
         "keyword": $alfred_workflow_keyword,
     },
-    "items": (if (length != 0) and (.[0].results | length > 0) and (.[4].results | length > 0) then
-        .[2].results as $correspondents |
-        .[3].results as $document_types |
-        .[4].results as $tags |
-        .[0].results | map(
-            ((.correspondent as $id | $correspondents[] | select(.id == $id) | .name) // null) as $correspondent |
-            ((.document_type as $id | $document_types[] | select(.id == $id) | .name) // null) as $document_type |
-            ((.tags as $id | $tags | map(select(.id == $id[])) | [.[].name] | map("#"+.)) // null) as $tags |
+    "items": (if (length != 0) and ($response.results | length > 0) and ($tags[0].results | length > 0) then
+        $response.results | map(
+            ((.correspondent as $id | $correspondents[0].results[] | select(.id == $id) | .name) // null) as $correspondent |
+            ((.document_type as $id | $document_types[0].results[] | select(.id == $id) | .name) // null) as $document_type |
+            ((.tags as $id | $tags[0].results | map(select(.id == $id[])) | [.[].name] | map("#"+.)) // null) as $tags |
         {
             "title": "\($correspondent | if . then .+"  -  " else "" end)\(.title | select(. != "") // "(no title)")",
             "subtitle": "🗓️ \(.created_date)\($document_type | if . then "  -  📄 "+. else "" end)\($tags | if .[0] then "  -  🏷️ "+join(", ") else "" end)",
@@ -75,14 +74,8 @@ jq -cs \
 				}
 			}
         })
-    elif (length == 0) or (.[4].results | length == 0) then
-		[{
-			"title": "No Documents Found",
-			"subtitle": "Press ↩ to load documents",
-			"arg": "reload"
-		}]
-    elif (.[0].results | length == 0) and (.[1] | length > 0) then
-		.[1] | map({
+    elif ($response.results | length == 0) and ($autocomplete | length > 0) then
+		$autocomplete | map({
  			"title": .,
  			"autocomplete": "\($query + .)",
  			"valid": false
@@ -94,4 +87,4 @@ jq -cs \
 			"valid": "false"
 		}]
     end)
-}' <<< "${paperless_json[@]}"
+}' <<< "${search_result}"
