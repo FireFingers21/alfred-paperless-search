@@ -20,7 +20,7 @@ readonly tags_file="${alfred_workflow_data}/tags.json"
 
 # Load Documents
 jq -cs \
-   --arg paperless_keyword "${paperless_keyword}" \
+   --arg alfred_workflow_keyword "${alfred_workflow_keyword}" \
    --arg baseUrl "${baseUrl}" \
    --arg useCorrespondent "${useCorrespondent}" \
    --arg useTag "${useTag}" \
@@ -30,6 +30,9 @@ jq -cs \
    --arg gridView "${gridView}" \
    --arg thumbnail_folder "${thumbnail_folder}" \
 '{
+    "variables": {
+        "keyword": $alfred_workflow_keyword,
+    },
     "items": (if (length != 0) and (.[0].results | length > 0) and (.[3].results | length > 0) then
         .[1].results as $correspondents |
         .[2].results as $document_types |
@@ -69,8 +72,7 @@ jq -cs \
 		[{
 			"title": "No Documents Found",
 			"subtitle": "Press ↩ to load documents",
-			"arg": "reload",
-			"variables": { "reloadKeyword": "\($paperless_keyword)" }
+			"arg": "reload"
 		}]
 	else
 		[{

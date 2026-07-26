@@ -8,7 +8,7 @@ cat << EOB
 	{
 		"title": "Reload Documents",
 		"subtitle": "Last Updated: ${lastUpdated}",
-		"variables": { "pref_id": "reload", "reloadKeyword": "${paperless_keyword}" }
+		"variables": { "pref_id": "reload", "keyword": "${${alfred_workflow_keyword%% ::}%%::}" }
 	},
 	{
 		"title": "Open Paperless-ngx",
@@ -17,6 +17,7 @@ cat << EOB
 	{
 		"title": "Configure Workflow...",
 		"subtitle": "Open the configuration window for ${alfred_workflow_name}",
+		"arg": "alfredpreferences://navigateto/workflows>workflow>${alfred_workflow_uid}>userconfig",
 		"variables": { "pref_id": "configure" }
 	},
 ]}

@@ -27,14 +27,17 @@ readonly paperless_json=(
 
 # Load Documents
 jq -cs \
+   --arg alfred_workflow_keyword "${alfred_workflow_keyword}" \
    --arg query "${1%%${autocomplete_query}}" \
    --arg fullQuery "${1}" \
-   --arg paperless_keyword "${paperless_keyword}" \
    --arg baseUrl "${baseUrl}" \
    --arg useQL "${useQL}" \
    --arg useThumbnails "${useThumbnails}" \
    --arg thumbnail_folder "${thumbnail_folder}" \
 '{
+    "variables": {
+        "keyword": $alfred_workflow_keyword,
+    },
     "items": (if (length != 0) and (.[0].results | length > 0) and (.[4].results | length > 0) then
         .[2].results as $correspondents |
         .[3].results as $document_types |
@@ -76,8 +79,7 @@ jq -cs \
 		[{
 			"title": "No Documents Found",
 			"subtitle": "Press ↩ to load documents",
-			"arg": "reload",
-			"variables": { "reloadKeyword": "\($paperless_keyword)d" }
+			"arg": "reload"
 		}]
     elif (.[0].results | length == 0) and (.[1] | length > 0) then
 		.[1] | map({

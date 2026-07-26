@@ -177,7 +177,7 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>6FBB8FA4-4439-4A21-A3D1-4708CA5C8D0F</string>
+				<string>EAD8C254-BB3A-4D50-93BA-106B14F73A22</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -857,7 +857,7 @@ fi</string>
 			<key>config</key>
 			<dict>
 				<key>argument</key>
-				<string>{var:reloadKeyword} </string>
+				<string>{var:keyword} </string>
 				<key>leftcursor</key>
 				<false/>
 			</dict>
@@ -908,8 +908,11 @@ fi</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string># Default browser selection
-[[ -z "${browser}" ]] &amp;&amp; open "${baseUrl}" || open -b "${browser}" "${baseUrl}"</string>
+				<string># Configure Workflow
+[[ "${1}" == "alfredpreferences"* ]] &amp;&amp; open "${1}" &amp;&amp; exit
+
+# Default browser selection
+[[ -z "${browser}" ]] &amp;&amp; open "${1}" || open -b "${browser}" "${1}"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -940,7 +943,7 @@ fi</string>
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>keyword</key>
-				<string>{var:paperless_keyword}::||{var:paperless_keyword} ::</string>
+				<string>{var:paperless_keyword}::||{var:paperless_keyword} ::||{var:paperless_keyword}d::||{var:paperless_keyword}d ::</string>
 				<key>queuedelaycustom</key>
 				<integer>1</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -1034,31 +1037,6 @@ fi</string>
 			<string>A5C00EA6-19DE-4E30-822D-AA37CD08D233</string>
 			<key>version</key>
 			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>68</integer>
-				<key>script</key>
-				<string>on run argv
-	tell application id "com.runningwithcrayons.Alfred" to reveal workflow (system attribute "alfred_workflow_bundleid") with configuration
-end run</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>6</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>6FBB8FA4-4439-4A21-A3D1-4708CA5C8D0F</string>
-			<key>version</key>
-			<integer>2</integer>
 		</dict>
 	</array>
 	<key>readme</key>
@@ -1187,15 +1165,6 @@ Use the [Universal Action](https://www.alfredapp.com/help/features/universal-act
 			<real>800</real>
 			<key>ypos</key>
 			<real>180</real>
-		</dict>
-		<key>6FBB8FA4-4439-4A21-A3D1-4708CA5C8D0F</key>
-		<dict>
-			<key>colorindex</key>
-			<integer>11</integer>
-			<key>xpos</key>
-			<real>315</real>
-			<key>ypos</key>
-			<real>625</real>
 		</dict>
 		<key>8A765A16-70CF-4066-BDDF-267CA653A52F</key>
 		<dict>
