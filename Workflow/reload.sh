@@ -11,9 +11,10 @@ readonly newModified=$(jq -cs '.[].results[].modified' ${documents_file})
 typeset -U http_code
 if [[ "${http_code}" -eq 200 ]]; then
     # Refresh Thumbnail cache
-    if [[ "${useThumbnails}" -eq 1 && ("${oldModified}" != "${newModified}" || ! -d "${thumbnail_folder}") ]]; then
+    set -o extendedglob
+    if [[ "${useThumbnails}" -eq 1 && ("${oldModified}" != "${newModified}" || -z ${thumbnail_folder}/*.webp(#qNY1)) ]]; then
         mkdir -p "${thumbnail_folder}"
-        readonly idList=$(jq -sr '.[].all | @csv' ${documents_file})
+        readonly idList=$(jq -csr '[.[].results[].id] | @csv' ${documents_file})
     	curl -sf --compressed --parallel --output-dir "${thumbnail_folder}" -H "Authorization: Token ${token}" -L "${baseUrl}/api/documents/{${idList}}/thumb/" -o "#1.webp"
     	find "${thumbnail_folder}" -type f -maxdepth 1 ! -newer "${documents_file}" -delete
     elif [[ "${useThumbnails}" -eq 0 && -d "${thumbnail_folder}" ]]; then
