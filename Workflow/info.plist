@@ -1316,9 +1316,9 @@ Use the [Universal Action](https://www.alfredapp.com/help/features/universal-act
 				<true/>
 			</dict>
 			<key>description</key>
-			<string></string>
+			<string>Keyword for searching Paperless-ngx documents.</string>
 			<key>label</key>
-			<string>Paperless-ngx Keyword</string>
+			<string>Paperless Keyword</string>
 			<key>type</key>
 			<string>textfield</string>
 			<key>variable</key>
@@ -1373,7 +1373,7 @@ Use the [Universal Action](https://www.alfredapp.com/help/features/universal-act
 				<string>Search by Document Type</string>
 			</dict>
 			<key>description</key>
-			<string>Prefixing words with @ filters by Correspondent, # filters by Tag, $ filters by Document Type</string>
+			<string>Prefixing words with @ filters by Correspondent, # filters by Tag, $ filters by Document Type.</string>
 			<key>label</key>
 			<string></string>
 			<key>type</key>
@@ -1430,7 +1430,7 @@ Use the [Universal Action](https://www.alfredapp.com/help/features/universal-act
 				<string>Enable Quick Look</string>
 			</dict>
 			<key>description</key>
-			<string>Tap shift or ⌘Y to Quick Look thumbnails</string>
+			<string>Tap shift or ⌘Y to Quick Look thumbnails.</string>
 			<key>label</key>
 			<string></string>
 			<key>type</key>
@@ -1484,7 +1484,7 @@ Use the [Universal Action](https://www.alfredapp.com/help/features/universal-act
 				</array>
 			</dict>
 			<key>description</key>
-			<string>Default browser for opening documents</string>
+			<string>Default browser for opening documents.</string>
 			<key>label</key>
 			<string>Default Browser</string>
 			<key>type</key>
@@ -1509,7 +1509,7 @@ Use the [Universal Action](https://www.alfredapp.com/help/features/universal-act
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>Hourly interval to automatically reload document cache (0 to disable)</string>
+			<string>Hourly interval to automatically reload document cache (0 to disable).</string>
 			<key>label</key>
 			<string>Auto-Update</string>
 			<key>type</key>
