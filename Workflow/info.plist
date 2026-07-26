@@ -1450,10 +1450,6 @@ Use the [Universal Action](https://www.alfredapp.com/help/features/universal-act
 						<string></string>
 					</array>
 					<array>
-						<string>Arc</string>
-						<string>company.thebrowser.Browser</string>
-					</array>
-					<array>
 						<string>Chromium</string>
 						<string>org.chromium.Chromium</string>
 					</array>
