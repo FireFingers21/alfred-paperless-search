@@ -385,7 +385,7 @@
 				<key>imageaspect</key>
 				<integer>1</integer>
 				<key>inputfile</key>
-				<string>search.sh</string>
+				<string>scripts/search.sh</string>
 				<key>inputtype</key>
 				<integer>1</integer>
 				<key>loadingtext</key>
@@ -477,7 +477,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>search.sh</string>
+				<string>scripts/search.sh</string>
 				<key>skipuniversalaction</key>
 				<true/>
 				<key>subtext</key>
@@ -697,7 +697,7 @@ fi</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>directSearch.sh</string>
+				<string>scripts/directSearch.sh</string>
 				<key>skipuniversalaction</key>
 				<true/>
 				<key>subtext</key>
@@ -837,7 +837,7 @@ fi</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>reload.sh</string>
+				<string>scripts/reload.sh</string>
 				<key>type</key>
 				<integer>8</integer>
 			</dict>
@@ -959,7 +959,7 @@ fi</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>configuration.sh</string>
+				<string>scripts/configuration.sh</string>
 				<key>skipuniversalaction</key>
 				<true/>
 				<key>subtext</key>

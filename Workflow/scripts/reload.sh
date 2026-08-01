@@ -5,10 +5,10 @@ readonly thumbnail_folder="${alfred_workflow_data}/thumbnails"
 
 mkdir -p "${alfred_workflow_data}"
 readonly oldModified=$(jq -cs '.[].results[].modified' ${documents_file})
-http_code=($(curl -sf --connect-timeout 5 --max-time 15 --compressed --parallel -w "%{http_code} " --output-dir "${alfred_workflow_data}" -H "Authorization: Token ${token}" -L "${baseUrl%%/}/api/documents/?page=1&page_size=100000&truncate_content=true" -o "documents.json" -L "${baseUrl%%/}/api/{correspondents,document_types,tags}/" -o "#1.json"))
+typeset -aU http_code
+http_code=($(curl -sf --connect-timeout 5 --max-time 10 --compressed --parallel -w "%{http_code} " --output-dir "${alfred_workflow_data}" -H "Authorization: Token ${token}" -L "${baseUrl%%/}/api/documents/?page=1&page_size=100000&truncate_content=true" -o "documents.json" -L "${baseUrl%%/}/api/{correspondents,document_types,tags}/" -o "#1.json"))
 readonly newModified=$(jq -cs '.[].results[].modified' ${documents_file})
 
-typeset -U http_code
 if [[ "${http_code}" -eq 200 ]]; then
     # Refresh Thumbnail cache
     set -o extendedglob
